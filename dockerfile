@@ -39,9 +39,12 @@ COPY . .
 COPY . .
 
 # Ensure storage and cache directories exist and are writable
-RUN mkdir -p storage/framework/{sessions,views,cache} storage/logs bootstrap/cache \
+RUN mkdir -p storage/framework/sessions \
+             storage/framework/views \
+             storage/framework/cache/data \
+             storage/logs \
+             bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
-
 # Finish Composer setup now that directories exist
 RUN composer dump-autoload --optimize \
     && php artisan config:clear \
