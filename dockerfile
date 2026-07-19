@@ -36,15 +36,16 @@ RUN composer install --no-scripts --no-interaction --no-autoloader --prefer-dist
 # Now copy the rest of the application code
 COPY . .
 
-# Finish Composer setup now that the full app (including artisan) is present
-RUN composer dump-autoload --optimize \
-    && php artisan config:clear \
-    && php artisan cache:clear
+COPY . .
 
-# Ensure storage and cache directories are writable
+# Ensure storage and cache directories exist and are writable
 RUN mkdir -p storage/framework/{sessions,views,cache} storage/logs bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
 
+# Finish Composer setup now that directories exist
+RUN composer dump-autoload --optimize \
+    && php artisan config:clear \
+    && php artisan cache:clear
 EXPOSE 8080
 
 # Use the platform-provided $PORT if set, otherwise default to 8080
