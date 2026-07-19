@@ -47,11 +47,11 @@
             "dont-discover": []
         }
     },
-    "minimum-stability": "stable",
-    "prefer-stable": true
-}
-"config": {
-    "audit": {
-        "block-insecure": false
+  "minimum-stability": "stable",
+    "prefer-stable": true,
+    "config": {
+        "audit": {
+            "block-insecure": false
+        }
     }
 }
