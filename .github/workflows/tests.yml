@@ -1,0 +1,21 @@
+      name: tests
+      on:
+        push:
+        workflow_dispatch:
+      jobs:
+        phpunit:
+          runs-on: ubuntu-latest
+          env:
+            APP_ENV: testing
+            APP_KEY: base64:x2poOVT0CS8Ktfu/QkSw0uTtCjd/eD53IWIlkfSVE+E=
+            COMPOSER_NO_SECURITY_BLOCKING: 1
+          steps:
+            - uses: actions/checkout@v4
+            - uses: shivammathur/setup-php@v2
+              with:
+                php-version: '8.3'
+                extensions: mbstring, pdo_sqlite, sqlite3, xml, curl, zip, gd, fileinfo
+                coverage: none
+            - run: composer install --no-interaction --prefer-dist --no-progress
+            - run: mkdir -p storage/framework/{sessions,views,cache/data} storage/logs bootstrap/cache
+            - run: php artisan test
