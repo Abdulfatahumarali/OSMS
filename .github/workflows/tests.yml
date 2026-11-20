@@ -19,3 +19,4 @@
             - run: composer install --no-interaction --prefer-dist --no-progress
             - run: mkdir -p storage/framework/{sessions,views,cache/data} storage/logs bootstrap/cache
             - run: php artisan test
+            - run: ./vendor/bin/phpunit --display-warnings --display-deprecations --filter EligibilityEvaluatorTest
